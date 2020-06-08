@@ -73,7 +73,7 @@ namespace Nats.Client.Api
         private static IServiceCollection AddRepositories(this IServiceCollection services)
         {
             services.AddTransient<IMessageForSaveRepository, MessageForSaveRepository>();
-
+            services.AddTransient<IMessageForSendRepository, MessageForSendRepository>();
             return services;
         }
 
@@ -83,11 +83,7 @@ namespace Nats.Client.Api
             .AddTransient<IBinarySerializer, BinaryFormatterSerializer>()
             .AddTransient<ICommandDispatcher, CommandDispatcher>()
             .AddTransient<IMessageProcessingService, MessageProcessingService>()
-            .AddTransient<IActionWriterService, ActionWriterService>()
-            
-            
-            
-            ;
+            .AddTransient<IActionWriterService, ActionWriterService>();
 
     }
 }
