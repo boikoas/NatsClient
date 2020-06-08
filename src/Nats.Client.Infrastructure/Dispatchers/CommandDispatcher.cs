@@ -1,5 +1,6 @@
 using Nats.Client.Domain.Model;
 using Nats.Client.Infrastructure.Messaging.Nats;
+using NATS.Client;
 using System;
 using System.Threading.Tasks;
 
@@ -7,7 +8,7 @@ namespace Nats.Client.Infrastructure.Dispatchers
 {
     public interface ICommandDispatcher
     {
-        event EventHandler<CommandMessage<MessageForSave>> GotMessage;
+        IAsyncSubscription SubscribeAsync(string topic, Action<NatsMessage<MessageForSave>> action);
 
         Task<ReplyMessage> SendAsync<T>(T command);
 
@@ -23,8 +24,6 @@ namespace Nats.Client.Infrastructure.Dispatchers
             _natsManager = natsManager;
         }
 
-        public event EventHandler<CommandMessage<MessageForSave>> GotMessage;
-
         Task<ReplyMessage> ICommandDispatcher.SendAsync<T>(T command)
         {
             return _natsManager.RequestAsync(
@@ -38,5 +37,11 @@ namespace Nats.Client.Infrastructure.Dispatchers
             return _natsManager.PublishAsync<T>(topic, data);
         }
 
+        public IAsyncSubscription SubscribeAsync(string topic, Action<NatsMessage<MessageForSave>> action)
+        {
+            return _natsManager.SubscribeAsync(
+                topic,
+                action);
+        }
     }
 }

@@ -1,5 +1,5 @@
 using System;
-using Nats.Setvice.Domain.Base;
+using Nats.Client.Domain.Base;
 
 namespace Nats.Client.Infrastructure.Messaging.Nats
 {

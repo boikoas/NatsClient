@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using Nats.Client.Domain;
 
 namespace Nats.Client.Infrastructure.Serializers.Binary
 {

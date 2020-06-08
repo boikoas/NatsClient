@@ -27,7 +27,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Nats.Client.Infrastructure\Nats.Client.Infrastructure.csproj" />
-    <ProjectReference Include="..\Nats.Service.Infrastructure\Nats.Client.Infrastructure.csproj" PrivateAssets="all" />
   </ItemGroup>
 
   <ItemGroup>

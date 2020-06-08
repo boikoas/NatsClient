@@ -47,7 +47,7 @@ namespace Nats.Client.Domain.Base
 
         public async Task<T> UpdateAsync(T entity)
         {
-            if (await Exists(entity.Guid))
+            if (!(await Exists(entity.Guid)))
                 throw new InvalidOperationException(nameof(Const.Message.ItemWasCreated));
            
             this.RepositoryContext.Set<T>().Update(entity);

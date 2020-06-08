@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Nats.Setvice.Domain.Base
+namespace Nats.Client.Domain.Base
 {
     [Serializable]
     public abstract class BaseCommand 

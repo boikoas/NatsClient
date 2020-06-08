@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Nats.Client.Infrastructure.Serializers.Binary;
 using NATS.Client;
+using MessageForSave = Nats.Client.Domain.Model.MessageForSave;
 
 namespace Nats.Client.Infrastructure.Messaging.Nats
 {
@@ -10,8 +11,8 @@ namespace Nats.Client.Infrastructure.Messaging.Nats
     {
         Task PublishAsync<T>(string topic, T data); 
         Task<ReplyMessage> RequestAsync<TRequest>(string topic, TRequest data, int timeout = 30);
-        IAsyncSubscription SubscribeAsync<T>(string topic, Action<NatsMessage<T>> action);
-        IAsyncSubscription SubscribeAsync<T>(string topic, string queue, Action<NatsMessage<T>> action);
+        IAsyncSubscription SubscribeAsync(string topic, Action<NatsMessage<MessageForSave>> action);
+        IAsyncSubscription SubscribeAsync(string topic, string queue, Action<NatsMessage<MessageForSave>> action);
     }
     
     public sealed class NatsManager : INatsManager
@@ -35,8 +36,6 @@ namespace Nats.Client.Infrastructure.Messaging.Nats
             {
                 var opts = ConnectionFactory.GetDefaultOptions();
                 opts.Url = _natsConfiguration.Url;
-                opts.ReconnectedEventHandler += ReconnectedEventHandler;
-                opts.ClosedEventHandler += ClosedEventHandler;
                 opts.AsyncErrorEventHandler += AsyncErrorEventHandler;
 
                 return new ConnectionFactory().CreateConnection(opts);
@@ -61,17 +60,17 @@ namespace Nats.Client.Infrastructure.Messaging.Nats
             return _binarySerializer.Deserialize<ReplyMessage>(response.Data);
         }
 
-        IAsyncSubscription INatsManager.SubscribeAsync<T>(string topic, Action<NatsMessage<T>> action)
+        IAsyncSubscription INatsManager.SubscribeAsync(string topic, Action<NatsMessage<MessageForSave>> action)
         {
             return SubscribeAsync(topic, string.Empty, action);
         }
         
-        IAsyncSubscription INatsManager.SubscribeAsync<T>(string topic, string queueName, Action<NatsMessage<T>> action)
+        IAsyncSubscription INatsManager.SubscribeAsync(string topic, string queueName, Action<NatsMessage<MessageForSave>> action)
         {
             return SubscribeAsync(topic, queueName, action);
         }
 
-        private IAsyncSubscription SubscribeAsync<T>(string topic, string queueName, Action<NatsMessage<T>> action) 
+        private IAsyncSubscription SubscribeAsync(string topic, string queueName, Action<NatsMessage<MessageForSave>> action) 
         {
             if (string.IsNullOrEmpty(queueName))
             {
@@ -85,19 +84,19 @@ namespace Nats.Client.Infrastructure.Messaging.Nats
                 EventHandlerFactory(action));
         }
         
-        private EventHandler<MsgHandlerEventArgs> EventHandlerFactory<T>(Action<NatsMessage<T>> action) 
+        private EventHandler<MsgHandlerEventArgs> EventHandlerFactory(Action<NatsMessage<MessageForSave>> action) 
         {
             return (sender, args) =>
             {
-                var natsMessage = NatMessageFactory<T>(args);
+                var natsMessage = NatMessageFactory(args);
                 action?.Invoke(natsMessage); 
             };
         }
         
-        private NatsMessage<T> NatMessageFactory<T>(MsgHandlerEventArgs args) 
+        private NatsMessage<MessageForSave> NatMessageFactory(MsgHandlerEventArgs args) 
         {
-            var message = _binarySerializer.Deserialize<T>(args.Message.Data);
-            return new NatsMessage<T>(
+            var message = _binarySerializer.Deserialize<MessageForSave>(args.Message.Data);
+            return new NatsMessage<MessageForSave>(
                 args.Message.Subject,
                 args.Message.Reply,
                 args.Message.Data,
@@ -106,15 +105,8 @@ namespace Nats.Client.Infrastructure.Messaging.Nats
             );
         }
         
-        private void ReconnectedEventHandler(object sender, ConnEventArgs e)
-        {
-            throw new Exception($"Reconnected to NATS.");
-        }
-        
-        private void ClosedEventHandler(object sender, ConnEventArgs e)
-        {
-            throw new Exception($"NATS connection closed.");
-        }
+
+
 
         private void AsyncErrorEventHandler(object sender, ErrEventArgs e)
         {

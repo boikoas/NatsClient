@@ -73,7 +73,6 @@ namespace Nats.Client.Api
         private static IServiceCollection AddRepositories(this IServiceCollection services)
         {
             services.AddTransient<IMessageForSaveRepository, MessageForSaveRepository>();
-            services.AddTransient<IMessageForSendRepository, MessageForSendRepository>();
             return services;
         }
 

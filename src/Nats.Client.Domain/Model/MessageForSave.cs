@@ -1,4 +1,4 @@
-﻿using Nats.Setvice.Domain;
+﻿using Nats.Client.Domain;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

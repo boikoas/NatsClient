@@ -17,7 +17,5 @@ namespace Nats.Client.Infrastructure.Database
 
         public DbSet<MessageForSave> MessagesForSave { get; set; }
 
-        public DbSet<MessageForSend> MessagesForSend { get; set; }
-
     }
 }

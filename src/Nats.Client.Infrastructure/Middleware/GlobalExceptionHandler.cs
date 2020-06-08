@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Nats.Client.Domain;
-using Nats.Setvice.Domain;
+using Nats.Client.Domain;
 using System;
 using System.Collections.Generic;
 using System.Text;
