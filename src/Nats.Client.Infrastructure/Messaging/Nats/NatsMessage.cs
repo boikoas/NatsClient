@@ -11,10 +11,10 @@ namespace Nats.Client.Infrastructure.Messaging.Nats
         public ISubscription ArrivalSubscription { get; }
 
         public NatsMessage(
-            string subject, 
-            string reply, 
-            byte[] data, 
-            T dataObject, 
+            string subject,
+            string reply,
+            byte[] data,
+            T dataObject,
             ISubscription arrivalSubscription)
         {
             Subject = subject;

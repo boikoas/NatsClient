@@ -1,16 +1,16 @@
-﻿using Nats.Client.Api.HealthCheck;
-using Microsoft.AspNetCore.Mvc.Filters;
+﻿using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System.Diagnostics.CodeAnalysis;
-using Microsoft.EntityFrameworkCore;
+using Nats.Client.Api.HealthCheck;
 using Nats.Client.Infrastructure.Database;
-using Nats.Client.Infrastructure.Messaging.Nats;
 using Nats.Client.Infrastructure.Database.Repositories;
-using Nats.Client.Infrastructure.Serializers.Binary;
 using Nats.Client.Infrastructure.Dispatchers;
+using Nats.Client.Infrastructure.Messaging.Nats;
+using Nats.Client.Infrastructure.Serializers.Binary;
 using Nats.Client.Infrastructure.Services;
 using Nats.Client.Infrastructure.Services.ActionWriterService;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Nats.Client.Api
 {
@@ -83,6 +83,5 @@ namespace Nats.Client.Api
             .AddTransient<ICommandDispatcher, CommandDispatcher>()
             .AddTransient<IMessageProcessingService, MessageProcessingService>()
             .AddTransient<IActionWriterService, ActionWriterService>();
-
     }
 }

@@ -31,7 +31,6 @@ namespace Nats.Client.Infrastructure.Dispatchers
                 new CommandMessage<T>(command));
         }
 
-
         public Task PublishAsync<T>(string topic, T data)
         {
             return _natsManager.PublishAsync<T>(topic, data);

@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Nats.Client.Infrastructure.Services.ActionWriterService;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Nats.Client.Api
@@ -20,6 +17,5 @@ namespace Nats.Client.Api
                 return app;
             }
         }
-
     }
 }

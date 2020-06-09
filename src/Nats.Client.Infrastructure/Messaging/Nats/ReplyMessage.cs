@@ -1,5 +1,5 @@
-using System;
 using Nats.Client.Domain.Base;
+using System;
 
 namespace Nats.Client.Infrastructure.Messaging.Nats
 {
@@ -21,7 +21,7 @@ namespace Nats.Client.Infrastructure.Messaging.Nats
         {
             return new ReplyMessage(true, message);
         }
-        
+
         public static ReplyMessage Failed(string message = null)
         {
             return new ReplyMessage(false, message);

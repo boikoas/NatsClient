@@ -1,14 +1,13 @@
 using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using Nats.Client.Domain;
 
 namespace Nats.Client.Infrastructure.Serializers.Binary
 {
     public sealed class BinaryFormatterSerializer : IBinarySerializer
     {
         private static readonly BinaryFormatter BinaryFormatter = new BinaryFormatter();
-        
+
         byte[] IBinarySerializer.Serialize<T>(T obj)
         {
             if (obj == null)

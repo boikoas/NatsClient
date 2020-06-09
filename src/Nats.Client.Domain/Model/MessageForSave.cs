@@ -1,9 +1,6 @@
-﻿using Nats.Client.Domain;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace Nats.Client.Domain.Model
 {
@@ -15,7 +12,6 @@ namespace Nats.Client.Domain.Model
         public int Number { get; set; }
 
         [Required(ErrorMessage = "Text dont be empty")]
-
         public string Text { get; set; }
 
         [Required]

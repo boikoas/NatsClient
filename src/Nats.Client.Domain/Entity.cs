@@ -9,6 +9,7 @@ namespace Nats.Client.Domain
     {
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity), Key()]
         public int Id { get; protected set; }
+
         public Guid Guid { get; set; } = Guid.NewGuid();
         public bool IsDeleted { get; protected set; } = false;
 
@@ -16,7 +17,7 @@ namespace Nats.Client.Domain
         {
             IsDeleted = true;
         }
-        
+
         public override bool Equals(object obj)
         {
             if (!(obj is Entity other))
